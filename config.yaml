@@ -1,0 +1,40 @@
+accuracy:
+  car : 0.8
+  bicycle : 0.5
+  motorcycle : 0.5
+  truck : 0.5
+  person : 0.5
+  bicyclist : 0.5
+  motorcyclist : 0.5
+  pole : 0.7
+  traffic-sign : 0.7
+  other-vehicle : 1
+
+accuracy_no:
+  car : 0
+  bicycle : 0
+  motorcycle : 0
+  truck : 0
+  person : 0
+  bicyclist : 0
+  motorcyclist : 0
+  pole : 0
+  traffic-sign : 0
+  other-vehicle : 0
+
+GAconfig:
+  instances : ["car", "bicycle", "motorcycle", "truck", "person", "bicyclist","motorcyclist","traffic-sign","other-vehicle","NULL"]
+  # instances : ["bicycle", "motorcycle", "person", "bicyclist","motorcyclist"]
+  weathers : ["rain","snow"]
+  angle : [0,360]
+  scale : [0.9, 1.0]
+  intensitys : [0, 1]
+  crossover : 0.9
+  mutation : 0.3
+  population_numbers : 20
+  gene_numbers : 5
+  max_radius : 50
+  termination : 20
+
+
+

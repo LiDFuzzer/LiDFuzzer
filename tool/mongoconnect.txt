@@ -1,0 +1,1 @@
+mongodb://lidarUser:lidarUserPW@0.0.0.0:27888/?authSource=admin&directConnection=true

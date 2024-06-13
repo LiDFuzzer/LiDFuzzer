@@ -1,0 +1,29 @@
+version: '3'
+services:
+  tool_mongodb_docker:
+    image: mongo:5.0.10
+    container_name: tool_mongodb_docker
+    ports:
+      - "27888:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: lidarUser
+      MONGO_INITDB_ROOT_PASSWORD: lidarUserPW
+
+  gen_lidar_tests:
+    container_name: gen_lidar_tests
+    image: tool_gen_lidar_tests:latest
+    command: tail -f /dev/null
+    volumes:
+      - ./:/root/
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      PYTHONPATH: /root/genLidarTestTool
+      DISPLAY: ":0"
+      RUNNING_IN_DOCKER: gen_lidar_tests
+      MONGO_CONNECT: /root/mongoconnect.txt
+      MODEL_DIR: /root/genLidarTestTool/suts
+      STAGING_DIR: /root/tmp/dataset/sequences/00/velodyne/
+      PRED_PATH: /root/pred_data/
+      LABEL_PATH: /root/selected_data/semantic_kitti_labels/dataset/sequences/
+      BIN_PATH: /root/selected_data/semantic_kitti_pcs/dataset/sequences/
+      MODELS: "cyl,js3c_gpu,sal,sq3"
