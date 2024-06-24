@@ -1,7 +1,7 @@
 from mmdet3d.apis import LidarSeg3DInferencer
 
 def run_inference(model, pcd_data_list, device=None,
-                  out_dir='/home/semLidarFuzz/service/models/outputs', show=False, wait_time=-1,
+                  out_dir='/home/LiDFuzzer/service/models/outputs', show=False, wait_time=-1,
                   no_save_vis=False, no_save_pred=False, print_result=False):
     """
     Run inference on a list of point cloud data files using a specified model.
@@ -20,14 +20,14 @@ def run_inference(model, pcd_data_list, device=None,
     """
     # Initialize inferencer
     if model == "Cylinder3D":
-        model_config = "/home/semLidarFuzz/mmdetection3d/configs/cylinder3d/cylinder3d_4xb4-3x_semantickitti.py"
-        model_weights = "/home/semLidarFuzz/mmdetection3d/checkpoints/cylinder3d_4xb4_3x_semantickitti_20230318_191107-822a8c31.pth"
+        model_config = "/home/LiDFuzzer/mmdetection3d/configs/cylinder3d/cylinder3d_4xb4-3x_semantickitti.py"
+        model_weights = "/home/LiDFuzzer/mmdetection3d/checkpoints/cylinder3d_4xb4_3x_semantickitti_20230318_191107-822a8c31.pth"
     elif model == "SPVCNN":
-        model_config = "/home/semLidarFuzz/mmdetection3d/configs/spvcnn/spvcnn_w32_8xb2-amp-laser-polar-mix-3x_semantickitti.py"
-        model_weights = "/home/semLidarFuzz/mmdetection3d/checkpoints/spvcnn_w32_8xb2-amp-laser-polar-mix-3x_semantickitti_20230425_125908-d68a68b7.pth"
+        model_config = "/home/LiDFuzzer/mmdetection3d/configs/spvcnn/spvcnn_w32_8xb2-amp-laser-polar-mix-3x_semantickitti.py"
+        model_weights = "/home/LiDFuzzer/mmdetection3d/checkpoints/spvcnn_w32_8xb2-amp-laser-polar-mix-3x_semantickitti_20230425_125908-d68a68b7.pth"
     elif model == "MinkuNet":
-        model_config = "/home/semLidarFuzz/mmdetection3d/configs/minkunet/minkunet34_w32_torchsparse_8xb2-amp-laser-polar-mix-3x_semantickitti.py"
-        model_weights = "/home/semLidarFuzz/mmdetection3d/checkpoints/minkunet34_w32_torchsparse_8xb2-amp-laser-polar-mix-3x_semantickitti_20230512_233511-bef6cad0.pth"
+        model_config = "/home/LiDFuzzer/mmdetection3d/configs/minkunet/minkunet34_w32_torchsparse_8xb2-amp-laser-polar-mix-3x_semantickitti.py"
+        model_weights = "/home/LiDFuzzer/mmdetection3d/checkpoints/minkunet34_w32_torchsparse_8xb2-amp-laser-polar-mix-3x_semantickitti_20230512_233511-bef6cad0.pth"
 
     print(model_config,model_weights)
 

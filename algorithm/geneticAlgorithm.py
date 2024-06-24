@@ -83,7 +83,7 @@ class Genetic():
 
     def run(self):
         # for index in range(len(self.labelFiles)): 
-        for index in range(5):
+        for index in range(len(self.labelFiles)):
             lablefile = self.labelFiles[index]
             print(lablefile)
             # last_accuracy,last_jaccard,now_accuracy, now_jaccard = 0,0,0,0
@@ -121,40 +121,36 @@ class Genetic():
                         #     if len(child_population) == self.individualnums:
                         #         break
                         if crossoverflag1:
-                            mutate_success = False  # 初始设定变异未成功
-                            attempts = 0  # 初始化尝试次数
+                            mutate_success = False  
+                            attempts = 0  
                             
                             while attempts < 3 and not mutate_success:
                                 mutateflag1 = self.mutate(child1, self.mutation_para)
                                 if mutateflag1:
-                                    mutate_success = True  # 变异成功，将flag设为True
-                                attempts += 1  # 无论成功与否，尝试次数都加1
+                                    mutate_success = True  
+                                attempts += 1  
                             
-                            # 如果至少一次变异尝试成功，且子代种群还有空间，那么添加child1到子代种群
                             if mutate_success and len(child_population) < self.individualnums:
                                 child_population.append(child1)
-                                crossovernum = 0  # 重置交叉次数（这个根据你的上下文需求可能需要调整）
+                                crossovernum = 0  
 
-                            # 如果子代种群已满，退出循环
                             if len(child_population) == self.individualnums:
                                 break
 
                         if crossoverflag2:
-                            mutate_success = False  # 初始设定变异未成功
-                            attempts = 0  # 初始化尝试次数
+                            mutate_success = False  
+                            attempts = 0  
                             
                             while attempts < 3 and not mutate_success:
                                 mutateflag1 = self.mutate(child1, self.mutation_para)
                                 if mutateflag1:
-                                    mutate_success = True  # 变异成功，将flag设为True
-                                attempts += 1  # 无论成功与否，尝试次数都加1
+                                    mutate_success = True  
+                                attempts += 1  
                             
-                            # 如果至少一次变异尝试成功，且子代种群还有空间，那么添加child1到子代种群
                             if mutate_success and len(child_population) < self.individualnums:
                                 child_population.append(child1)
-                                crossovernum = 0  # 重置交叉次数（这个根据你的上下文需求可能需要调整）
+                                crossovernum = 0  
 
-                            # 如果子代种群已满，退出循环
                             if len(child_population) == self.individualnums:
                                 break
 
@@ -211,20 +207,20 @@ class Genetic():
 
     def record(self, population, baseScene, generation):
         recore_title = baseScene + "-------" + str(generation) + '\n'
-        recordpath = "/home/semLidarFuzz/record/" + "scene{}-{}-weather.txt".format(self.baseSequence,self.model)
+        recordpath = "/home/LiDFuzzer/record/" + "scene{}-{}-weather.txt".format(self.baseSequence,self.model)
         fileIO.write_record(recore_title, recordpath)
         for ind in population:
             fileIO.record_dict_to_file(ind.compare_result, recordpath)
 
     def record_random_all(self, population, baseScene):
-        recordpath = "/home/semLidarFuzz/record/" + "scene{}-{}-Random.txt".format(self.baseSequence, self.model)
+        recordpath = "/home/LiDFuzzer/record/" + "scene{}-{}-Random.txt".format(self.baseSequence, self.model)
         generation = -1
         for index, ind in enumerate(population):
             if index%20 == 0:
-                generation += 1  # 增加 generation 的值
+                generation += 1 
                 recore_title = baseScene + "-------" + str(generation) + '\n'
-                fileIO.write_record(recore_title, recordpath)  # 写入记录标题
-            fileIO.record_dict_to_file(ind.compare_result, recordpath)  # 写入比较结果
+                fileIO.write_record(recore_title, recordpath)  
+            fileIO.record_dict_to_file(ind.compare_result, recordpath) 
 
     def initPopulations(self, baseScene):
         population = []
@@ -234,10 +230,10 @@ class Genetic():
                                 self.baseLabelPath, self.baseBinPath, self.basePredictionPath, self.baseSequence, baseScene)
                 ind.initial(ind.model, self.assetRepository, ind.genenums, ind.instances_range, ind.visual, ind.baseBinPath, ind.baseLabelPath, ind.baseSequence, ind.baseScene, ind.basePredictionPath)
                 population.append(ind)
-            # poprecord = "/home/semLidarFuzz/seed/" + baseScene + "population.pkl"
+            # poprecord = "/home/LiDFuzzer/seed/" + baseScene + "population.pkl"
             # fileIO.writepopulation(poprecord, population)
         else:
-            poprecord = "/home/semLidarFuzz/seed/" + baseScene + "population.pkl"
+            poprecord = "/home/LiDFuzzer/seed/" + baseScene + "population.pkl"
             history_population = fileIO.readpopulation(poprecord)
             for i in range(self.individualnums):
                 ind = Individual(self.IfInstance, self.IfWeather, self.max_radius, self.gene_numbers, self.instances_range, self.weather_range, self.scale, self.angle, self.intensity_range, self.pk, self.model, \
@@ -271,7 +267,7 @@ class Genetic():
             ind = Individual(self.IfInstance, self.IfWeather, self.max_radius, self.gene_numbers, self.instances_range, self.weather_range, self.scale, self.angle, self.intensity_range, self.pk, self.model, \
                             self.baseLabelPath, self.baseBinPath, self.basePredictionPath, self.baseSequence, baseScene)
             # ind.initial_more_instances(ind.model, self.assetRepository, ind.genenums, ind.instances_range, ind.visual, ind.baseBinPath, ind.baseLabelPath, ind.baseSequence, ind.baseScene, ind.basePredictionPath)
-            flag = ind.initial_from_record(ind.genenums, "/home/semLidarFuzz/output_data copy.csv",self.assetRepository, total_index)
+            flag = ind.initial_from_record(ind.genenums, "/home/LiDFuzzer/output_data copy.csv",self.assetRepository, total_index)
             total_index += 1
             if flag:
                 population.append(ind)
@@ -299,23 +295,23 @@ class Genetic():
             # runCommand += " --save-folder {}".format(predlabelpath)
             # modelstatu = runModel(None, runCommand, self.model, binpath, saveLabel)
             runCommand = "python test.py"
-            runCommand += " /home/semLidarFuzz/mmdetection3d/configs/cylinder3d/cylinder3d_4xb4-3x_semantickitti.py"
-            runCommand += " /home/semLidarFuzz/mmdetection3d/checkpoints/cylinder3d_4xb4_3x_semantickitti_20230318_191107-822a8c31.pth"
+            runCommand += " /home/LiDFuzzer/mmdetection3d/configs/cylinder3d/cylinder3d_4xb4-3x_semantickitti.py"
+            runCommand += " /home/LiDFuzzer/mmdetection3d/checkpoints/cylinder3d_4xb4_3x_semantickitti_20230318_191107-822a8c31.pth"
             modelstatu = runModel(None, runCommand, self.model, binpath, saveLabel, predlabelpath)
         elif self.model == "SPVCNN":
             runCommand = "python test.py"
-            runCommand += " /home/semLidarFuzz/mmdetection3d/configs/spvcnn/spvcnn_w32_8xb2-amp-laser-polar-mix-3x_semantickitti.py"
-            runCommand += " /home/semLidarFuzz/mmdetection3d/checkpoints/spvcnn_w32_8xb2-amp-laser-polar-mix-3x_semantickitti_20230425_125908-d68a68b7.pth"
+            runCommand += " /home/LiDFuzzer/mmdetection3d/configs/spvcnn/spvcnn_w32_8xb2-amp-laser-polar-mix-3x_semantickitti.py"
+            runCommand += " /home/LiDFuzzer/mmdetection3d/checkpoints/spvcnn_w32_8xb2-amp-laser-polar-mix-3x_semantickitti_20230425_125908-d68a68b7.pth"
             modelstatu = runModel(None, runCommand, self.model, binpath, saveLabel, predlabelpath)
         elif self.model == "MinkuNet":
             runCommand = "python test.py"
-            runCommand += " /home/semLidarFuzz/mmdetection3d/configs/minkunet/minkunet34_w32_torchsparse_8xb2-amp-laser-polar-mix-3x_semantickitti.py"
-            runCommand += " /home/semLidarFuzz/mmdetection3d/checkpoints/minkunet34_w32_torchsparse_8xb2-amp-laser-polar-mix-3x_semantickitti_20230512_233511-bef6cad0.pth"
+            runCommand += " /home/LiDFuzzer/mmdetection3d/configs/minkunet/minkunet34_w32_torchsparse_8xb2-amp-laser-polar-mix-3x_semantickitti.py"
+            runCommand += " /home/LiDFuzzer/mmdetection3d/checkpoints/minkunet34_w32_torchsparse_8xb2-amp-laser-polar-mix-3x_semantickitti_20230512_233511-bef6cad0.pth"
             modelstatu = runModel(None, runCommand, self.model, binpath, saveLabel, predlabelpath)
         elif self.model == "FRNet":
             runCommand = "python test.py"
-            runCommand += " /home/semLidarFuzz/FRNet/configs/frnet/frnet-semantickitti_seg.py"
-            runCommand += " /home/semLidarFuzz/FRNet/frnet-semantickitti_seg.pth"
+            runCommand += " /home/LiDFuzzer/FRNet/configs/frnet/frnet-semantickitti_seg.py"
+            runCommand += " /home/LiDFuzzer/FRNet/frnet-semantickitti_seg.pth"
             modelstatu = runModel(None, runCommand, self.model, binpath, saveLabel, predlabelpath)
         if modelstatu == 0:
             print("Model prediction completed")
@@ -360,23 +356,23 @@ class Genetic():
                 # runCommand += " --save-folder {}".format(predlabelpath)
                 # modelstatu = runModel(None, runCommand, self.model, binpath, saveLabel)
                 runCommand = "python test.py"
-                runCommand += " /home/semLidarFuzz/mmdetection3d/configs/cylinder3d/cylinder3d_4xb4-3x_semantickitti.py"
-                runCommand += " /home/semLidarFuzz/mmdetection3d/checkpoints/cylinder3d_4xb4_3x_semantickitti_20230318_191107-822a8c31.pth"
+                runCommand += " /home/LiDFuzzer/mmdetection3d/configs/cylinder3d/cylinder3d_4xb4-3x_semantickitti.py"
+                runCommand += " /home/LiDFuzzer/mmdetection3d/checkpoints/cylinder3d_4xb4_3x_semantickitti_20230318_191107-822a8c31.pth"
                 modelstatu = runModel(None, runCommand, self.model, binpath, saveLabel, predlabelpath)
             elif self.model == "SPVCNN":
                 runCommand = "python test.py"
-                runCommand += " /home/semLidarFuzz/mmdetection3d/configs/spvcnn/spvcnn_w32_8xb2-amp-laser-polar-mix-3x_semantickitti.py"
-                runCommand += " /home/semLidarFuzz/mmdetection3d/checkpoints/spvcnn_w32_8xb2-amp-laser-polar-mix-3x_semantickitti_20230425_125908-d68a68b7.pth"
+                runCommand += " /home/LiDFuzzer/mmdetection3d/configs/spvcnn/spvcnn_w32_8xb2-amp-laser-polar-mix-3x_semantickitti.py"
+                runCommand += " /home/LiDFuzzer/mmdetection3d/checkpoints/spvcnn_w32_8xb2-amp-laser-polar-mix-3x_semantickitti_20230425_125908-d68a68b7.pth"
                 modelstatu = runModel(None, runCommand, self.model, binpath, saveLabel, predlabelpath)
             elif self.model == "MinkuNet":
                 runCommand = "python test.py"
-                runCommand += " /home/semLidarFuzz/mmdetection3d/configs/minkunet/minkunet34_w32_torchsparse_8xb2-amp-laser-polar-mix-3x_semantickitti.py"
-                runCommand += " /home/semLidarFuzz/mmdetection3d/checkpoints/minkunet34_w32_torchsparse_8xb2-amp-laser-polar-mix-3x_semantickitti_20230512_233511-bef6cad0.pth"
+                runCommand += " /home/LiDFuzzer/mmdetection3d/configs/minkunet/minkunet34_w32_torchsparse_8xb2-amp-laser-polar-mix-3x_semantickitti.py"
+                runCommand += " /home/LiDFuzzer/mmdetection3d/checkpoints/minkunet34_w32_torchsparse_8xb2-amp-laser-polar-mix-3x_semantickitti_20230512_233511-bef6cad0.pth"
                 modelstatu = runModel(None, runCommand, self.model, binpath, saveLabel, predlabelpath)
             elif self.model == "FRNet":
                 runCommand = "python test.py"
-                runCommand += " /home/semLidarFuzz/FRNet/configs/frnet/frnet-semantickitti_seg.py"
-                runCommand += " /home/semLidarFuzz/FRNet/frnet-semantickitti_seg.pth"
+                runCommand += " /home/LiDFuzzer/FRNet/configs/frnet/frnet-semantickitti_seg.py"
+                runCommand += " /home/LiDFuzzer/FRNet/frnet-semantickitti_seg.pth"
                 modelstatu = runModel(None, runCommand, self.model, binpath, saveLabel, predlabelpath)
             if modelstatu == 0:
                 print("Model prediction completed")
@@ -644,23 +640,18 @@ class Genetic():
                     start_index = random.randint(0, self.gene_numbers - 2)
                     end_index = random.randint(start_index + 1, self.gene_numbers - 1)
                     
-                    # 获取父代的实例信息
                     individualInstance1 = parent1.individual["instance"]
                     individualInstance2 = parent2.individual["instance"]
                     
-                    # 深拷贝原始实例以便在需要时恢复
                     originalIndividualInstance1 = copy.deepcopy(individualInstance1)
                     originalIndividualInstance2 = copy.deepcopy(individualInstance2)
 
-                    # 交换两个父代在选定区间的元素
                     individualInstance1[start_index:end_index+1], individualInstance2[start_index:end_index+1] = \
                     individualInstance2[start_index:end_index+1], individualInstance1[start_index:end_index+1]
 
-                    # 更新父代实例
                     parent1.individual["instance"] = individualInstance1
                     parent2.individual["instance"] = individualInstance2
 
-                    # 尝试生成新的PCD实例，检查是否有效
                     crossoverFlag1 = parent1.crossover_generate_pcd_instance(self.assetRepository)
                     crossoverFlag2 = parent2.crossover_generate_pcd_instance(self.assetRepository)
 

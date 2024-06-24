@@ -100,18 +100,12 @@ class Individual():
             pcd_point.points = o3d.utility.Vector3dVector(points)
             viewer = o3d.visualization.Visualizer()
             viewer.create_window(window_name='可视化', width=1920, height=1080)
-            #界面参数选项
             opt = viewer.get_render_option()
-            #背景颜色
             opt.background_color = np.asarray([1, 1, 1])
-            #点大小
             opt.point_size = 1
-            #添加坐标系
             opt.show_coordinate_frame = True
-            #颜色
             pcd_point.paint_uniform_color([0, 0, 0])
             viewer.add_geometry(pcd_point)
-            #激活界面循环
             viewer.run()
 
     def set(self, attr, value):
@@ -524,19 +518,15 @@ class Individual():
         # self.vis_allPcdPoints(self.pcdArr, self.visual)
     
     def initial_from_record(self, genenums, recordpath, assetRepository, row_index):
-        # 读取CSV文件
         df = pd.read_csv(recordpath)
         
-        # 定义新数据列的名称
         new_column_name = self.model
         
-        # 检查是否需要添加新列
         if new_column_name not in df.columns:
-            df[new_column_name] = None  # 如果列不存在，添加并初始化为None
+            df[new_column_name] = None  
 
         row = df.iloc[row_index]
         print(row)
-        # 两两分组，并创建实例
         instance_gene_list = []
         for i in range(0, genenums * 2, 2):
             asset_id = row[i]
@@ -551,7 +541,6 @@ class Individual():
         flag = self.crossover_generate_pcd_instance_from_record(assetRepository)
 
         if not flag:
-            # 直接更新新列的数据
             df.at[row_index, new_column_name] = self.model
             df.to_csv(recordpath, index=False)
 
@@ -1191,9 +1180,9 @@ class Individual():
 
 
 if __name__ == '__main__':
-    assetRepository = AssetRepository("/home/semLidarFuzz/tool/selected_data/pcs/sequences","/home/semLidarFuzz/tool/selected_data/labels/sequences","/home/semLidarFuzz/tool/mongoconnect.txt", "instanceAssetsMinkuNet")
+    assetRepository = AssetRepository("/home/LiDFuzzer/tool/selected_data/pcs/sequences","/home/LiDFuzzer/tool/selected_data/labels/sequences","/home/LiDFuzzer/tool/mongoconnect.txt", "instanceAssetsMinkuNet")
     assetRepository.removeinstance("04")
-    # assetRepository = AssetRepository("/home/semLidarFuzz/tool/selected_data/semantic_kitti_pcs/dataset/sequences","/home/semLidarFuzz/tool/selected_data/semantic_kitti_labels/dataset/sequences","    /home/semLidarFuzz/mongodb.txt")
+    # assetRepository = AssetRepository("/home/LiDFuzzer/tool/selected_data/semantic_kitti_pcs/dataset/sequences","/home/LiDFuzzer/tool/selected_data/semantic_kitti_labels/dataset/sequences","    /home/LiDFuzzer/mongodb.txt")
     # max_radius = None
     # genenums = 5 
     # instances_list = ["car", "traffic-sign", "NULL"]
@@ -1203,9 +1192,9 @@ if __name__ == '__main__':
     # intensitys = None 
     # pk = False
     # model = 'Cylinder3D'
-    # baseLabelPath = "/home/semLidarFuzz/tool/selected_data/labels/sequences"
-    # baseBinPath = "/home/semLidarFuzz/tool/selected_data/pcs/sequences"
-    # basePredictionPath = "/home/semLidarFuzz/tool/pred_data"
+    # baseLabelPath = "/home/LiDFuzzer/tool/selected_data/labels/sequences"
+    # baseBinPath = "/home/LiDFuzzer/tool/selected_data/pcs/sequences"
+    # basePredictionPath = "/home/LiDFuzzer/tool/pred_data"
     # baseSequence = "04"
     # baseScene = "000000"
     # IfInstance = True

@@ -45,7 +45,7 @@ class CylRunner(DockerRunner):
 
     
     def runModel(self, dataDir, predictionDir, modelRunDir, runCommand):
-        modelRunDir = "/home/semLidarFuzz/tool/genLidarTestTool/suts/Cylinder3D-updated-CUDA"
+        modelRunDir = "/home/LiDFuzzer/tool/genLidarTestTool/suts/Cylinder3D-updated-CUDA"
         print("Running {}".format(self.modelDirName))
         runCommand = "cd {} && {}".format(modelRunDir, runCommand)
         print(runCommand)

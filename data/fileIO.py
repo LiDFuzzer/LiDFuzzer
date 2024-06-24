@@ -150,34 +150,27 @@ def save_individual_data(instances, save_path):
         instances (list): List of instance data, typically individual.individual["instance"]
         save_path (str): Path to save the output CSV file
     """
-    # 创建列名基于实例数量
     num_instances = len(instances)
     columns = []
     for i in range(num_instances):
         columns.append(f"ID_{i}")
         columns.append(f"Angle_{i}")
 
-    # 初始化 DataFrame
     df = pd.DataFrame(columns=columns)
     
-    # 处理每个实例并填充数据
     data = {}
     for index, instance_asset in enumerate(instances):
         asset = instance_asset.get_asset()
         
-        # 创建每个实例的 ID 和 Angle 键
         id_key = f"ID_{index}"
         angle_key = f"Angle_{index}"
         
-        # 设置 ID 和 Angle 的值
         data[id_key] = asset["_id"] if asset is not None else None
         data[angle_key] = instance_asset.get_angle()
     
-    # 添加一行数据到 DataFrame
     df = df.append(data, ignore_index=True)
     
     file_exists = os.path.exists(save_path)
 
-    # 保存 DataFrame 到 CSV 文件，以追加模式
     df.to_csv(save_path, mode='a', index=False, header=not file_exists)
     print(f"Data saved to {save_path}")

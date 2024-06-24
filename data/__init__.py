@@ -1,2 +1,2 @@
 import sys
-sys.path.append("/home/semLidarFuzz/data")
+sys.path.append("/home/LiDFuzzer/data")

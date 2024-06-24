@@ -186,25 +186,25 @@ def runModel(modelRunDir, runCommand , model, binpath, labelpath, predlabelpath)
 
     if model == "Cylinder3D":
         if modelRunDir == None:
-            modelRunDir = "/home/LiDFuzzer/mmdetection3d/tools"
+            modelRunDir = "/home//LiDFuzzer/mmdetection3d/tools"
         runCommand = "cd {} && {}".format(modelRunDir, runCommand)
         print(runCommand)
         returnCode = subprocess.Popen(runCommand, shell=True).wait()
     elif model == "SPVCNN":
         if modelRunDir == None:
-            modelRunDir = "/home/LiDFuzzer/mmdetection3d/tools"
+            modelRunDir = "/home//LiDFuzzer/mmdetection3d/tools"
         runCommand = "cd {} && {}".format(modelRunDir, runCommand)
         print(runCommand)
         returnCode = subprocess.Popen(runCommand, shell=True).wait()
     elif model == "MinkuNet":
         if modelRunDir == None:
-            modelRunDir = "/home/LiDFuzzer/mmdetection3d/tools"
+            modelRunDir = "/home//LiDFuzzer/mmdetection3d/tools"
         runCommand = "cd {} && {}".format(modelRunDir, runCommand)
         print(runCommand)
         returnCode = subprocess.Popen(runCommand, shell=True).wait()
     elif model == "FRNet":
         if modelRunDir == None:
-            modelRunDir = "/home/LiDFuzzer/FRNet"
+            modelRunDir = "/home//LiDFuzzer/FRNet"
         runCommand = "cd {} && {}".format(modelRunDir, runCommand)
         print(runCommand)
         returnCode = subprocess.Popen(runCommand, shell=True).wait()
@@ -227,64 +227,51 @@ def predict(model, binpath, labelpath, predlabelpath):
             # runCommand += " --save-folder {}".format(predlabelpath)
             # modelstatu = runModel(None, runCommand, model, binpath, labelpath)
             runCommand = "python test.py"
-            runCommand += " /home/LiDFuzzer/mmdetection3d/configs/cylinder3d/cylinder3d_4xb4-3x_semantickitti.py"
-            runCommand += " /home/LiDFuzzer/mmdetection3d/checkpoints/cylinder3d_4xb4_3x_semantickitti_20230318_191107-822a8c31.pth"
+            runCommand += " /home//LiDFuzzer/mmdetection3d/configs/cylinder3d/cylinder3d_4xb4-3x_semantickitti.py"
+            runCommand += " /home//LiDFuzzer/mmdetection3d/checkpoints/cylinder3d_4xb4_3x_semantickitti_20230318_191107-822a8c31.pth"
             modelstatu = runModel(None, runCommand, model, binpath, labelpath,predlabelpath)
         elif model == "SPVCNN":
             runCommand = "python test.py"
-            runCommand += " /home/LiDFuzzer/mmdetection3d/configs/spvcnn/spvcnn_w32_8xb2-amp-laser-polar-mix-3x_semantickitti.py"
-            runCommand += " /home/LiDFuzzer/mmdetection3d/checkpoints/spvcnn_w32_8xb2-amp-laser-polar-mix-3x_semantickitti_20230425_125908-d68a68b7.pth"
+            runCommand += " /home//LiDFuzzer/mmdetection3d/configs/spvcnn/spvcnn_w32_8xb2-amp-laser-polar-mix-3x_semantickitti.py"
+            runCommand += " /home//LiDFuzzer/mmdetection3d/checkpoints/spvcnn_w32_8xb2-amp-laser-polar-mix-3x_semantickitti_20230425_125908-d68a68b7.pth"
             modelstatu = runModel(None, runCommand, model, binpath, labelpath,predlabelpath)
 
         elif model == "MinkuNet":
             runCommand = "python test.py"
-            runCommand += " /home/LiDFuzzer/mmdetection3d/configs/minkunet/minkunet34_w32_torchsparse_8xb2-amp-laser-polar-mix-3x_semantickitti.py"
-            runCommand += " /home/LiDFuzzer/mmdetection3d/checkpoints/minkunet34_w32_torchsparse_8xb2-amp-laser-polar-mix-3x_semantickitti_20230512_233511-bef6cad0.pth"
+            runCommand += " /home//LiDFuzzer/mmdetection3d/configs/minkunet/minkunet34_w32_torchsparse_8xb2-amp-laser-polar-mix-3x_semantickitti.py"
+            runCommand += " /home//LiDFuzzer/mmdetection3d/checkpoints/minkunet34_w32_torchsparse_8xb2-amp-laser-polar-mix-3x_semantickitti_20230512_233511-bef6cad0.pth"
             modelstatu = runModel(None, runCommand, model, binpath, labelpath,predlabelpath)
 
         elif model == "FRNet":
             runCommand = "python test.py"
-            runCommand += " /home/LiDFuzzer/FRNet/configs/frnet/frnet-semantickitti_seg.py"
-            runCommand += " /home/LiDFuzzer/FRNet/frnet-semantickitti_seg.pth"
+            runCommand += " /home//LiDFuzzer/FRNet/configs/frnet/frnet-semantickitti_seg.py"
+            runCommand += " /home//LiDFuzzer/FRNet/frnet-semantickitti_seg.pth"
             modelstatu = runModel(None, runCommand, model, binpath, labelpath,predlabelpath)
     return modelstatu
 
 
 def copy_files_to_another_directory(orginal_directory, destination_directory):
-    # 确保目标文件夹存在，如果不存在则创建
     if not os.path.exists(destination_directory):
         os.makedirs(destination_directory)
 
-    # 遍历源文件夹下的所有文件
     for filename in os.listdir(orginal_directory):
-        # 构建源文件的完整路径
         source_file = os.path.join(orginal_directory, filename)
-        # 构建目标文件的完整路径
         destination_file = os.path.join(destination_directory, filename)
-        # 将源文件复制到目标文件夹中
         shutil.copy(source_file, destination_file)
 
 def delete_files_in_directory(directory):
-    # 遍历文件夹中的所有文件
     for filename in os.listdir(directory):
-        # 构建文件的完整路径
         file_path = os.path.join(directory, filename)
-        # 如果是文件而不是文件夹，则删除该文件
         if os.path.isfile(file_path):
             os.remove(file_path)
 
 def move_files_to_another_directory(orginal_directory, destination_directory):
-    # 确保目标文件夹存在，如果不存在则创建
     if not os.path.exists(destination_directory):
         os.makedirs(destination_directory)
 
-    # 遍历源文件夹下的所有文件
     for filename in os.listdir(orginal_directory):
-        # 构建源文件的完整路径
         source_file = os.path.join(orginal_directory, filename)
-        # 构建目标文件的完整路径
         destination_file = os.path.join(destination_directory, filename)
-        # 将源文件移动到目标文件夹中
         shutil.move(source_file, destination_file)
         print(f"File '{source_file}' has been moved to '{destination_file}'.")
 
@@ -321,10 +308,6 @@ def labelInatanceModify(binpath, labelpath, labelpathmodel):
         else:
             saveLabelFile(labelpathmodel + filename, semantics, instances)
         
-
-
-
-#由于模型的训练会将一些语义进行转化，比如将moving-car转化为car，所以需要将原来的语义进行转化
 def changeSemantics(semantics): 
     v_map = np.vectorize(lambda x: learning_map[x] if x in learning_map else x)
     semantics_mapped = v_map(semantics)
@@ -386,7 +369,6 @@ def checkInclusionBasedOnTriangleMeshAsset(points, mesh, type):
     return False
 
 
-#判断点云在哪个环内
 def assetPosition(pcdArr, instances, instance, cfg):
     # pcdsequence = o3d.geometry.PointCloud()
     # pcdsequence.points = o3d.utility.Vector3dVector(pcdArr)
@@ -435,7 +417,6 @@ def assetIsValid(pcdArr, instances, instance, semantics):
     #  Get the asset's bounding box
     obb = pcdAsset.get_oriented_bounding_box()
     assetCenter = obb.get_center()
-    #计算相机与物体之间的距离
     dist = np.linalg.norm(centerCamPoint - assetCenter)
 
     # Dist is acceptable
@@ -469,7 +450,6 @@ def assetIsValid(pcdArr, instances, instance, semantics):
 def poleTosign(pcds, instances, semantics):
     flag = False
     instance_poleTosign_dict = {}
-    # 选出含有sign和pole且能聚类为sign的点，则必须含有sign的点
     mask_signAndpole = (instances >= 1000)
     mask_sign = (instances >= 3000)
     if np.any(mask_signAndpole) and np.any(mask_sign):
@@ -506,7 +486,6 @@ def poleTosign(pcds, instances, semantics):
                         minXy[2] = 0
                         distAcross = np.linalg.norm(maxXy - minXy)
                         if (distAcross < 3):
-                            #将所有pole实例的序号改为sign的序号
                             typesinstances = set()
                             flag = True
                             for instance in instancesSignAndPole:
@@ -518,129 +497,6 @@ def poleTosign(pcds, instances, semantics):
                             instance_poleTosign_dict[instance_key] = sorted_list
     return instance_poleTosign_dict, flag
 
-# #计算每个实例预测的精度并进行挑选
-# def instancesSelect(binpath, labelpath, predlabelpath, cfg, mdbInstanceAssets, model):
-#     binFiles = np.array(glob.glob(binpath + "*.bin", recursive = True))
-#     labelFiles = np.array(glob.glob(labelpath + "*.label", recursive = True))
-#     predlabelFiles = np.array(glob.glob(predlabelpath + "*.label", recursive = True))
-
-#     binFiles = sorted(binFiles)
-#     labelFiles = sorted(labelFiles)
-#     predlabelFiles = sorted(predlabelFiles)
-#     instances_assets = []
-#     for index in range(len(labelFiles)):
-#         pcds, intensity = openBinFile(binFiles[index])
-#         semantics, instances = openLabelFile(labelFiles[index])
-#         change_semantics = changeSemantics(semantics)
-#         pred_semantics, pred_instances = openLabelFile(predlabelFiles[index])
-#         instance_poleTosign_dict, flag = poleTosign(pcds, instances, semantics)
-#         instancesAcc_dict = {}
-#         instantSet = set()
-#         for instance in instances:
-#             instantSet.add(instance)
-#         for instance in instantSet:
-#             if instance == 0:
-#                 continue
-#             mask = (instances == instance)
-#             orgtype = change_semantics[mask]
-#             predtype = pred_semantics[mask]
-#             count = 0
-#             for ele in predtype:
-#                 if ele == orgtype[0]:
-#                     count = count + 1
-#             accuracy = float(count/orgtype.size)
-#             orgtypename = name_label_mapping[orgtype[0]]
-#             if orgtypename == "person" or orgtypename == "bicycle" or orgtypename == "motorcycle" or orgtypename == "truck" or orgtypename == "bicyclist" or orgtypename == "motorcyclist":
-#                 print(instance, orgtypename, accuracy, orgtype.size)
-#             if accuracy >= cfg["accuracy"][orgtypename]:
-#                 instancesAcc_dict[instance] = accuracy
-#         #将精度超过阈值的sign和pole进行实例合并
-#         merge_instances = {}
-#         print(instancesAcc_dict)
-#         copy_instances = np.copy(instances)
-#         if flag == True:
-#             for key, values in instance_poleTosign_dict.items():
-#                 all_flag = True
-#                 if key not in instancesAcc_dict:
-#                     all_flag = False
-#                 else:
-#                     for value in values:
-#                         if value not in instancesAcc_dict:
-#                             all_flag = False
-
-#                 if all_flag:
-#                     merge_instances[key] = values
-#                     for value in values:
-#                         instances[copy_instances == value] = key
-
-#                         instancesAcc_dict[key] += instancesAcc_dict.pop(value)
-#                     instancesAcc_dict[key] = float(instancesAcc_dict[key]/(len(instance_poleTosign_dict[key]) +1))
-#         inset = set()
-#         for ins in instances:
-#             inset.add(ins)
-#         # print(inset)
-#         for accinstance in instancesAcc_dict:
-#             if accinstance >= 1000 and accinstance <= 3000:
-#                 continue
-#             valid_flag = assetIsValid(pcds, instances, accinstance, semantics)
-#             print(accinstance, valid_flag)
-#             if valid_flag:
-#                 # saveLabelFile(labelFiles[index], semantics, instances)
-#                 asset = {}
-#                 # print(accinstance)
-#                 # 拆分路径
-#                 sequence_path, file_name = os.path.split(labelFiles[index])
-#                 # 再次拆分序列路径
-#                 sequence_dir, sequence_number = os.path.split(sequence_path)
-#                 # 获取上一级目录的名称
-#                 parent_directory = os.path.basename(sequence_dir)
-
-#                 accinstance_mask = (instances == accinstance)
-#                 accinstance_semantic = change_semantics[accinstance_mask]
-
-#                 asset["_id"] = parent_directory + "-" + file_name.split('.')[0] + "-" + str(accinstance) + "-" + name_label_mapping[accinstance_semantic[0]]
-#                 asset["sequence"] = parent_directory
-#                 asset["scene"] = file_name.split('.')[0]
-#                 asset["type"] = name_label_mapping[accinstance_semantic[0]]
-#                 asset["type-semantic"] = int(accinstance_semantic[0])
-#                 asset["type-points"] = int(np.count_nonzero(accinstance_mask))
-#                 asset["accuracy"] = instancesAcc_dict[accinstance]
-#                 # asset["instances"] = int(accinstance)
-#                 if accinstance in merge_instances:
-#                     merge_instances[accinstance].append(accinstance)
-#                     all_instances_list = [int(x) for x in merge_instances[accinstance]]
-#                     asset["all-instances"] = all_instances_list
-#                 else:
-#                     asset["all-instances"] = int(accinstance)
-#                 asset["model"] = model
-#                 asset["dist_index"] = assetPosition(pcds, instances, accinstance, cfg)
-#                 print(asset)
-#                 instances_assets.append(asset)
-#         if (len(instances_assets) >= 2000):
-#             print("save batch of 2000 instances of {}".format(parent_directory))
-#             # Batch insert
-#             try:
-#                 mdbInstanceAssets.insert_many(instances_assets)
-#             except pymongo.errors.BulkWriteError as e:
-#                 # https://stackoverflow.com/questions/44838280/how-to-ignore-duplicate-key-errors-safely-using-insert-many
-#                 panic = list(filter(lambda x: x['code'] != 11000, e.details['writeErrors']))
-#                 if len(panic) > 0:
-#                     raise RuntimeError("Error writing to mongo", e)
-
-#             instances_assets = []
-
-#     # Batch insert any remaining asset details
-#     if (len(instances_assets) != 0):
-#         print('Saving remaining', len(instances_assets), 'instance assets')
-#         try:
-#             mdbInstanceAssets.insert_many(instances_assets)
-#         except pymongo.errors.BulkWriteError as e:
-#             # https://stackoverflow.com/questions/44838280/how-to-ignore-duplicate-key-errors-safely-using-insert-many
-#             panic = list(filter(lambda x: x['code'] != 11000, e.details['writeErrors']))
-#             if len(panic) > 0:
-#                 raise RuntimeError("Error writing to mongo", e)
-    
-#计算每个实例预测的精度并进行挑选
 def instancesSelect(binpath, labelpath, predlabelpath, cfg, mdbInstanceAssets, model):
     binFiles = np.array(glob.glob(binpath + "*.bin", recursive = True))
     labelFiles = np.array(glob.glob(labelpath + "*.label", recursive = True))
@@ -681,7 +537,7 @@ def instancesSelect(binpath, labelpath, predlabelpath, cfg, mdbInstanceAssets, m
                 print(instance, orgtypename, accuracy, orgtype.size)
             if accuracy >= cfg["accuracy_no"][orgtypename]:
                 instancesAcc_dict[instance] = accuracy
-        #将精度超过阈值的sign和pole进行实例合并
+
         merge_instances = {}
         copy_instances = np.copy(instances)
         if flag == True:
@@ -714,11 +570,11 @@ def instancesSelect(binpath, labelpath, predlabelpath, cfg, mdbInstanceAssets, m
                 # saveLabelFile(labelFiles[index], semantics, instances)
                 asset = {}
                 # print(accinstance)
-                # 拆分路径
+
                 sequence_path, file_name = os.path.split(labelFiles[index])
-                # 再次拆分序列路径
+
                 sequence_dir, sequence_number = os.path.split(sequence_path)
-                # 获取上一级目录的名称
+
                 parent_directory = os.path.basename(sequence_dir)
 
                 accinstance_mask = (instances == accinstance)
@@ -795,7 +651,6 @@ def instancesSelectNoaccuracy(binpath, labelpath, cfg, mdbInstanceAssets):
             typeNum = np.argmax(counts)
             orgtypename = name_label_mapping[learning_map_inv[typeNum]]
             instancesAcc_dict[instance] = 0
-        #将精度超过阈值的sign和pole进行实例合并
 
         merge_instances = {}
         copy_instances = np.copy(instances)
@@ -830,11 +685,11 @@ def instancesSelectNoaccuracy(binpath, labelpath, cfg, mdbInstanceAssets):
                 # saveLabelFile(labelFiles[index], semantics, instances)
                 asset = {}
                 # print(accinstance)
-                # 拆分路径
+
                 sequence_path, file_name = os.path.split(labelFiles[index])
-                # 再次拆分序列路径
+
                 sequence_dir, sequence_number = os.path.split(sequence_path)
-                # 获取上一级目录的名称
+
                 parent_directory = os.path.basename(sequence_dir)
 
                 accinstance_mask = (instances == accinstance)
@@ -884,14 +739,14 @@ def instancesSelectNoaccuracy(binpath, labelpath, cfg, mdbInstanceAssets):
 def parse_args():
     p = argparse.ArgumentParser(
         description='instances extract')
-    # p.add_argument("-orginalbinPath", 
-    #     help="Path to the ariginal semanticKITTI sequences bins", 
-    #     nargs='?', const="",
-    #     default="")
-    # p.add_argument("-orginallabelPath", 
-    #     help="Path to the ariginal semanticKITTI sequences labels", 
-    #     nargs='?', const="",
-    #     default="")
+    p.add_argument("-orginalbinPath", 
+        help="Path to the ariginal semanticKITTI sequences bins", 
+        nargs='?', const="",
+        default="")
+    p.add_argument("-orginallabelPath", 
+        help="Path to the ariginal semanticKITTI sequences labels", 
+        nargs='?', const="",
+        default="")
     p.add_argument("-binPath", 
         help="Path to the compress semanticKITTI sequences bins", 
         nargs='?', const="",
@@ -900,69 +755,69 @@ def parse_args():
         help="Path to the compress semanticKITTI sequences lables", 
         nargs='?', const="",
         default="")
-    # p.add_argument("-predlabelPath",
-    #     help="Path to the predicted semanticKITTI labels",
-    #     nargs='?', const="",
-    #     default="")
-    # p.add_argument("-model",
-    #     help="model to predict semanticKITTI bins",
-    #     nargs='?', const="",
-    #     default="")
-    # p.add_argument(
-    #   '-mdb', 
-    #   type=str,
-    #   required=False,
-    #   default="mongodb.txt",
-    #   help='mongodb config file. Defaults to %(default)s')
-    # p.add_argument(
-    #   '-config',
-    #   type=str,
-    #   required=False,
-    #   default="config.yaml",
-    #   help='Dataset config file. Defaults to %(default)s')
+    p.add_argument("-predlabelPath",
+        help="Path to the predicted semanticKITTI labels",
+        nargs='?', const="",
+        default="")
+    p.add_argument("-model",
+        help="model to predict semanticKITTI bins",
+        nargs='?', const="",
+        default="")
+    p.add_argument(
+      '-mdb', 
+      type=str,
+      required=False,
+      default="mongodb.txt",
+      help='mongodb config file. Defaults to %(default)s')
+    p.add_argument(
+      '-config',
+      type=str,
+      required=False,
+      default="config.yaml",
+      help='Dataset config file. Defaults to %(default)s')
 
     return p.parse_args()
 
 def main():
     args = parse_args()
-    # print("Connecting to Mongo")
-    # mdb = mongoConnect(args.mdb)
-    # model = args.model
-    # mdbColAssets = mdb["assets4"]
-    # mdbColAssetMetadata = mdb["asset_metadata4"]
-    # print("Connected")
-    # if mdb is not None:
-    #     print("Connected to MongoDB")
-    #     mdb_name = "instanceAssets_five"
-    #     mdbInstanceAssets = mdb[mdb_name]
-    # else:
-    #     print("Failed to connect to MongoDB")
+    print("Connecting to Mongo")
+    mdb = mongoConnect(args.mdb)
+    model = args.model
+    mdbColAssets = mdb["assets4"]
+    mdbColAssetMetadata = mdb["asset_metadata4"]
+    print("Connected")
+    if mdb is not None:
+        print("Connected to MongoDB")
+        mdb_name = "instanceAssets_five"
+        mdbInstanceAssets = mdb[mdb_name]
+    else:
+        print("Failed to connect to MongoDB")
 
-    # orginal_binpath = os.path.normpath(args.orginalbinPath) +  "/"
-    # orginal_labelpath = os.path.normpath(args.orginallabelPath) +  "/"
+    orginal_binpath = os.path.normpath(args.orginalbinPath) +  "/"
+    orginal_labelpath = os.path.normpath(args.orginallabelPath) +  "/"
 
     binpath = os.path.normpath(args.binPath) +  "/"
     labelpath = os.path.normpath(args.labelPath) +  "/"
     binpathchange = args.binPath + "instance/"
     labelpathchange = args.labelPath + "instance/"
-    # predlabelpath = os.path.normpath(args.predlabelPath) +  "/"
+    predlabelpath = os.path.normpath(args.predlabelPath) +  "/"
     if not os.path.exists(binpathchange):
         os.makedirs(binpathchange)
         copy_files_to_another_directory(binpath,binpathchange)
     if not os.path.exists(labelpathchange):
         os.makedirs(labelpathchange)
         labelInatanceModify(binpath, labelpath, labelpathchange)
-    # # open config file
-    # try:
-    #     print("Opening config file %s" % args.config)
-    #     cfg = yaml.safe_load(open(args.config, 'r'))
-    # except Exception as e:
-    #     print(e)
-    #     print("Error opening yaml file.")
-    #     quit()
+    # open config file
+    try:
+        print("Opening config file %s" % args.config)
+        cfg = yaml.safe_load(open(args.config, 'r'))
+    except Exception as e:
+        print(e)
+        print("Error opening yaml file.")
+        quit()
 
-    # predict(model, orginal_binpath, orginal_labelpath, predlabelpath)    
-    # # instancesSelect(binpathchange, labelpathchange, predlabelpath,cfg, mdbInstanceAssets,model)
+    predict(model, orginal_binpath, orginal_labelpath, predlabelpath)    
+    instancesSelect(binpathchange, labelpathchange, predlabelpath,cfg, mdbInstanceAssets,model)
     # instancesSelectNoaccuracy(binpathchange, labelpathchange, cfg, mdbInstanceAssets)
 
 
