@@ -285,10 +285,6 @@ class Genetic():
         else:
             os.makedirs(predlabelpath)
             print("Save mutated prediction folder alrealdy have done!")
-
-        # if self.model == "Cylinder3D" or self.model == "SPVCNN" or self.model == "MinkuNet":
-        #     run_inference(model = self.model, pcd_data_list = binpath, out_dir = predlabelpath)
-        #     fileIO.changeJsonLabel(predlabelpath)
         if self.model == "Cylinder3D":
                 # runCommand = "python3 demo_folder.py"
                 # runCommand += " --demo-folder {}".format(binpath)

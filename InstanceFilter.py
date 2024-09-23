@@ -228,10 +228,6 @@ def predict(model, binpath, labelpath, predlabelpath):
     else:
         os.makedirs(predlabelpath)
         if model == "Cylinder3D":
-            # runCommand = "python3 demo_folder.py"
-            # runCommand += " --demo-folder {}".format(binpath)
-            # runCommand += " --save-folder {}".format(predlabelpath)
-            # modelstatu = runModel(None, runCommand, model, binpath, labelpath)
             runCommand = "python test.py"
             runCommand += " /home/LiDFuzzer/sut/mmdetection3d/configs/cylinder3d/cylinder3d_4xb4-3x_semantickitti.py"
             runCommand += " /home/LiDFuzzer/sut/mmdetection3d/checkpoints/cylinder3d_4xb4_3x_semantickitti_20230318_191107-822a8c31.pth"
