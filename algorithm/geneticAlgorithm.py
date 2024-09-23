@@ -290,34 +290,37 @@ class Genetic():
         #     run_inference(model = self.model, pcd_data_list = binpath, out_dir = predlabelpath)
         #     fileIO.changeJsonLabel(predlabelpath)
         if self.model == "Cylinder3D":
-            # runCommand = "python3 demo_folder.py"
-            # runCommand += " --demo-folder {}".format(binpath)
-            # runCommand += " --save-folder {}".format(predlabelpath)
-            # modelstatu = runModel(None, runCommand, self.model, binpath, saveLabel)
-            runCommand = "python test.py"
-            runCommand += " /home/LiDFuzzer/mmdetection3d/configs/cylinder3d/cylinder3d_4xb4-3x_semantickitti.py"
-            runCommand += " /home/LiDFuzzer/mmdetection3d/checkpoints/cylinder3d_4xb4_3x_semantickitti_20230318_191107-822a8c31.pth"
-            modelstatu = runModel(None, runCommand, self.model, binpath, saveLabel, predlabelpath)
-        elif self.model == "SPVCNN":
-            runCommand = "python test.py"
-            runCommand += " /home/LiDFuzzer/mmdetection3d/configs/spvcnn/spvcnn_w32_8xb2-amp-laser-polar-mix-3x_semantickitti.py"
-            runCommand += " /home/LiDFuzzer/mmdetection3d/checkpoints/spvcnn_w32_8xb2-amp-laser-polar-mix-3x_semantickitti_20230425_125908-d68a68b7.pth"
-            modelstatu = runModel(None, runCommand, self.model, binpath, saveLabel, predlabelpath)
-        elif self.model == "MinkuNet":
-            runCommand = "python test.py"
-            runCommand += " /home/LiDFuzzer/mmdetection3d/configs/minkunet/minkunet34_w32_torchsparse_8xb2-amp-laser-polar-mix-3x_semantickitti.py"
-            runCommand += " /home/LiDFuzzer/mmdetection3d/checkpoints/minkunet34_w32_torchsparse_8xb2-amp-laser-polar-mix-3x_semantickitti_20230512_233511-bef6cad0.pth"
-            modelstatu = runModel(None, runCommand, self.model, binpath, saveLabel, predlabelpath)
-        elif self.model == "FRNet":
-            runCommand = "python test.py"
-            runCommand += " /home/LiDFuzzer/FRNet/configs/frnet/frnet-semantickitti_seg.py"
-            runCommand += " /home/LiDFuzzer/FRNet/frnet-semantickitti_seg.pth"
-            modelstatu = runModel(None, runCommand, self.model, binpath, saveLabel, predlabelpath)
-        if modelstatu == 0:
-            print("Model prediction completed")
-        else:
-            print("An error occurred during the prediction process")
-            return
+                # runCommand = "python3 demo_folder.py"
+                # runCommand += " --demo-folder {}".format(binpath)
+                # runCommand += " --save-folder {}".format(predlabelpath)
+                # modelstatu = runModel(None, runCommand, self.model, binpath, saveLabel)
+                runCommand = "python test.py"
+                runCommand += " /home/LiDFuzzer/suts/mmdetection3d/configs/cylinder3d/cylinder3d_4xb4-3x_semantickitti.py"
+                runCommand += " /home/LiDFuzzer/suts/mmdetection3d/checkpoints/cylinder3d_4xb4_3x_semantickitti_20230318_191107-822a8c31.pth"
+                modelstatu = runModel(None, runCommand, self.model, binpath, saveLabel, predlabelpath)
+            elif self.model == "SPVNAS":
+                runCommand = "python test.py"
+                runCommand += " /home/LiDFuzzer/suts/mmdetection3d/configs/spvcnn/spvcnn_w32_8xb2-amp-laser-polar-mix-3x_semantickitti.py"
+                runCommand += " /home/LiDFuzzer/suts/mmdetection3d/checkpoints/spvcnn_w32_8xb2-amp-laser-polar-mix-3x_semantickitti_20230425_125908-d68a68b7.pth"
+                modelstatu = runModel(None, runCommand, self.model, binpath, saveLabel, predlabelpath)
+            elif self.model == "JS3C-Net":
+                runCommand = "python test_kitti_segment.py"
+                runCommand += " --log_dir JS3C-Net-kitti --gpu 0"
+                modelstatu = runModel(None, runCommand, self.model, binpath, saveLabel, predlabelpath)
+            elif self.model == "FRNet":
+                runCommand = "python test.py"
+                runCommand += " /home/LiDFuzzer/suts/FRNet/configs/frnet/frnet-semantickitti_seg.py"
+                runCommand += " /home/LiDFuzzer/suts/FRNet/frnet-semantickitti_seg.pth"
+                modelstatu = runModel(None, runCommand, self.model, binpath, saveLabel, predlabelpath)
+            elif self.model == "SphereFormer":
+                runCommand = "python train.py"
+                runCommand += " --config /home/LiDFuzzer/suts/SphereFormer/config/semantic_kitti/semantic_kitti_unet32_spherical_transformer.yaml"
+                modelstatu = runModel(None, runCommand, self.model, binpath, saveLabel, predlabelpath)
+            if modelstatu == 0:
+                print("Model prediction completed")
+            else:
+                print("An error occurred during the prediction process")
+                return
         modifiedLabels = getLabels(saveLabel)
         modifiedPredictions = getLabels(saveModel)
         newPredictions = getLabels(predlabelpath)
@@ -356,23 +359,26 @@ class Genetic():
                 # runCommand += " --save-folder {}".format(predlabelpath)
                 # modelstatu = runModel(None, runCommand, self.model, binpath, saveLabel)
                 runCommand = "python test.py"
-                runCommand += " /home/LiDFuzzer/mmdetection3d/configs/cylinder3d/cylinder3d_4xb4-3x_semantickitti.py"
-                runCommand += " /home/LiDFuzzer/mmdetection3d/checkpoints/cylinder3d_4xb4_3x_semantickitti_20230318_191107-822a8c31.pth"
+                runCommand += " /home/LiDFuzzer/suts/mmdetection3d/configs/cylinder3d/cylinder3d_4xb4-3x_semantickitti.py"
+                runCommand += " /home/LiDFuzzer/suts/mmdetection3d/checkpoints/cylinder3d_4xb4_3x_semantickitti_20230318_191107-822a8c31.pth"
                 modelstatu = runModel(None, runCommand, self.model, binpath, saveLabel, predlabelpath)
-            elif self.model == "SPVCNN":
+            elif self.model == "SPVNAS":
                 runCommand = "python test.py"
-                runCommand += " /home/LiDFuzzer/mmdetection3d/configs/spvcnn/spvcnn_w32_8xb2-amp-laser-polar-mix-3x_semantickitti.py"
-                runCommand += " /home/LiDFuzzer/mmdetection3d/checkpoints/spvcnn_w32_8xb2-amp-laser-polar-mix-3x_semantickitti_20230425_125908-d68a68b7.pth"
+                runCommand += " /home/LiDFuzzer/suts/mmdetection3d/configs/spvcnn/spvcnn_w32_8xb2-amp-laser-polar-mix-3x_semantickitti.py"
+                runCommand += " /home/LiDFuzzer/suts/mmdetection3d/checkpoints/spvcnn_w32_8xb2-amp-laser-polar-mix-3x_semantickitti_20230425_125908-d68a68b7.pth"
                 modelstatu = runModel(None, runCommand, self.model, binpath, saveLabel, predlabelpath)
-            elif self.model == "MinkuNet":
-                runCommand = "python test.py"
-                runCommand += " /home/LiDFuzzer/mmdetection3d/configs/minkunet/minkunet34_w32_torchsparse_8xb2-amp-laser-polar-mix-3x_semantickitti.py"
-                runCommand += " /home/LiDFuzzer/mmdetection3d/checkpoints/minkunet34_w32_torchsparse_8xb2-amp-laser-polar-mix-3x_semantickitti_20230512_233511-bef6cad0.pth"
+            elif self.model == "JS3C-Net":
+                runCommand = "python test_kitti_segment.py"
+                runCommand += " --log_dir JS3C-Net-kitti --gpu 0"
                 modelstatu = runModel(None, runCommand, self.model, binpath, saveLabel, predlabelpath)
             elif self.model == "FRNet":
                 runCommand = "python test.py"
-                runCommand += " /home/LiDFuzzer/FRNet/configs/frnet/frnet-semantickitti_seg.py"
-                runCommand += " /home/LiDFuzzer/FRNet/frnet-semantickitti_seg.pth"
+                runCommand += " /home/LiDFuzzer/suts/FRNet/configs/frnet/frnet-semantickitti_seg.py"
+                runCommand += " /home/LiDFuzzer/suts/FRNet/frnet-semantickitti_seg.pth"
+                modelstatu = runModel(None, runCommand, self.model, binpath, saveLabel, predlabelpath)
+            elif self.model == "SphereFormer":
+                runCommand = "python train.py"
+                runCommand += " --config /home/LiDFuzzer/suts/SphereFormer/config/semantic_kitti/semantic_kitti_unet32_spherical_transformer.yaml"
                 modelstatu = runModel(None, runCommand, self.model, binpath, saveLabel, predlabelpath)
             if modelstatu == 0:
                 print("Model prediction completed")
